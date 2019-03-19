@@ -11,10 +11,6 @@ function authenticationRequestError (state, error, options) {
     throw error
   }
 
-  if (error.status === 401 && otpRequired && error.request && error.request.headers['x-github-otp']) {
-    throw new HttpError('Invalid one-time password for two-factor authentication', 401, error.headers, options)
-  }
-
   if (typeof state.auth.on2fa !== 'function') {
     throw new HttpError('2FA required, but options.on2fa is not a function. See https://github.com/octokit/rest.js#authentication', 401, error.headers, options)
   }
